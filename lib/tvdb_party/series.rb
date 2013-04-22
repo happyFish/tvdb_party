@@ -26,6 +26,17 @@ module TvdbParty
         @rating = 0
       end
 
+      if options["Episode"]
+        case options["Episode"]
+        when Array
+          options["Episode"].map{|result| Episode.new(self, result)}
+        when Hash
+          [Episode.new(options["Episode"])]
+        else
+          []
+        end
+      end
+
       begin
         @first_aired = Date.parse(options["FirstAired"])
       rescue
